@@ -1,7 +1,8 @@
 const express = require('express')
+require('dotenv').config()
 const router = require("./routes/client/index.router")
 const app = express()
-const port = 3000
+const port = process.env.PORT
 
 app.set('view engine', 'pug')
 app.use(express.static(__dirname + '/public'))
