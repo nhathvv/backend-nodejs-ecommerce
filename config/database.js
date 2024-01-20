@@ -7,5 +7,4 @@ module.exports.connect = async() => {
     } catch (error) {
         console.log("Connect failed!")
     }
-
 }
