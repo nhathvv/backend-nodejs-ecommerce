@@ -1,6 +1,7 @@
 const Product = require("../../models/product.model")
 const filerStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
+const paginationHelper = require("../../helpers/pagination")
 
 // [GET]: /admin/products
 const index = async (req, res) => {
@@ -17,16 +18,21 @@ const index = async (req, res) => {
     if(req.query.keyword) {
         find.title = objectSearch.regex
     }
-
-    const products = await Product.find(find)
+    // Pagination
+    const countProduct = await Product.countDocuments(find);
+    const objectPagination = paginationHelper({
+        currentPage  : 1,
+        limitItems : 4
+    }, req.query, countProduct)
+    const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip)
     res.render("admin/pages/products/index",{
         pageTitle : "Danh sách sản phẩm",
         products : products,
         filterStatus : filterStatus,
-        keyword : objectSearch.keyword
+        keyword : objectSearch.keyword,
+        pagination : objectPagination
     })
 }
 module.exports = {
     index
-
 }
