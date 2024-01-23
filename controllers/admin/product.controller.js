@@ -1,52 +1,29 @@
 const Product = require("../../models/product.model")
+const filerStatusHelper = require("../../helpers/filterStatus")
+const searchHelper = require("../../helpers/search")
 
 // [GET]: /admin/products
 const index = async (req, res) => {
-    const status = req.query.status
-    let filterStatus = [
-        {
-            name : "Tất cả",
-            status : "",
-            class : "",
-        },
-        {
-            name : "Hoạt động",
-            status : "active",
-            class :"",
-        },
-        {
-            name : "Dừng hoạt động",
-            status : "inactive",
-            class :"",
-        }
-    ]
-    if(req.query.status) {
-        const index = filterStatus.findIndex(item => item.status == req.query.status);
-        filterStatus[index].class = "active";
-    }else {
-        const index = filterStatus.findIndex(item => item.status == "");
-        filterStatus[index].class = "active";
-    }
-
+    const filterStatus = filerStatusHelper(req.query)
     let find = {
         deleted : false
     }
-    if(status) {
+    if(req.query.status) {
         find.status = req.query.status
     }
+
     // Search
-    let keyword = ""
+    const objectSearch = searchHelper(req.query);
     if(req.query.keyword) {
-        keyword = req.query.keyword
-        const regax = new RegExp(keyword,"i");
-        find.title = regax
+        find.title = objectSearch.regex
     }
+
     const products = await Product.find(find)
     res.render("admin/pages/products/index",{
         pageTitle : "Danh sách sản phẩm",
         products : products,
         filterStatus : filterStatus,
-        keyword : keyword
+        keyword : objectSearch.keyword
     })
 }
 module.exports = {
