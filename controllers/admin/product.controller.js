@@ -34,12 +34,19 @@ const index = async (req, res) => {
     if(status) {
         find.status = req.query.status
     }
-
+    // Search
+    let keyword = ""
+    if(req.query.keyword) {
+        keyword = req.query.keyword
+        const regax = new RegExp(keyword,"i");
+        find.title = regax
+    }
     const products = await Product.find(find)
     res.render("admin/pages/products/index",{
         pageTitle : "Danh sách sản phẩm",
         products : products,
-        filterStatus : filterStatus
+        filterStatus : filterStatus,
+        keyword : keyword
     })
 }
 module.exports = {

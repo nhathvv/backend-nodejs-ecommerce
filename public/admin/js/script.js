@@ -14,3 +14,19 @@ buttonStatus.forEach(button => {
    
 })
 /* End Button Status */
+
+/* Search */
+const formSearch = document.querySelector("#form-search")
+if(formSearch) {
+    formSearch.addEventListener("submit", (e)=> {
+        e.preventDefault()
+        const keyword = e.target.elements.keyword.value
+        const url = new URL(window.location.href);
+        if(keyword) {
+            url.searchParams.set("keyword",keyword)
+        }else {
+            url.searchParams.delete("keyword")
+        }
+        window.location.href = url.href
+    })
+}
