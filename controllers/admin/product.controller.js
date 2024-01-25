@@ -40,7 +40,14 @@ const changeStatus = async(req,res) => {
     await Product.updateOne({_id : id}, {status:status})
     res.redirect('back')
 }
+const changeMulti = async(req, res) => {
+    const type = req.body.type;
+    const ids = req.body.ids.split(",");
+    await Product.updateMany({_id :  {$in : ids}}, {status:type})
+    res.redirect('back')
+}
 module.exports = {
     index,
-    changeStatus
+    changeStatus,
+    changeMulti
 }
