@@ -40,14 +40,25 @@ const changeStatus = async(req,res) => {
     await Product.updateOne({_id : id}, {status:status})
     res.redirect('back')
 }
+// [PATCH] /admin/products/change-multi
 const changeMulti = async(req, res) => {
     const type = req.body.type;
     const ids = req.body.ids.split(",");
     await Product.updateMany({_id :  {$in : ids}}, {status:type})
     res.redirect('back')
 }
+// [DELETE] /admin/products/delete/:id
+const deleteItem = async(req,res) => {
+    const id = req.params.id;
+    // Permanently deleted
+    // await Product.deleteOne({_id : id})
+    // Soft erase
+    await Product.updateOne({_id: id}, {deleted : true})
+    res.redirect('back')
+}
 module.exports = {
     index,
     changeStatus,
-    changeMulti
+    changeMulti,
+    deleteItem
 }

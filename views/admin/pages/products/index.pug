@@ -45,7 +45,8 @@ block main
                                     a(href="javascript:;" class="badge badge-danger"  data-id=item.id data-status=item.status button-change-status) Dừng hoạt động
                             td 
                                 button(class="btn btn-warning btn-sm") Sửa
-                                button(class="btn btn-danger btn-sm ml-1") Xóa
+                                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
     +pagination(pagination)
-    form(action="", method="POST", data-path=`${prefixAdmin}/products/change-status` id="form-change-status") 
+    form(action="", method="POST", data-path=`${prefixAdmin}/products/change-status` id="form-change-status")
+    form(action="", method="POST", data-path=`${prefixAdmin}/products/delete` id="form-delete-item") 
     script(src="/admin/js/product.js") 
