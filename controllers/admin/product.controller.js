@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model")
+const systemConfig = require('../../config/system')
 const filerStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
 const paginationHelper = require("../../helpers/pagination")
@@ -81,9 +82,34 @@ const deleteItem = async(req,res) => {
     await Product.updateOne({_id: id}, {deleted : true, deletedAt : new Date()})
     res.redirect('back')
 }
+// [GET] /admin/products/create
+const create = async(req,res) =>{
+    res.render("admin/pages/products/create",{
+        pageTitle : "Thêm mới sản phẩm",
+    })
+}
+// [POST] /admin/products/create
+const createProduct = async(req,res) => {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    console.log(req.body);
+    if(req.body.position == "") {
+        const countProduct = await Product.countDocuments({})
+        req.body.position = countProduct + 1;
+    }else {
+        req.body.position = parseInt(req.body.position);
+    }
+    const product = new Product(req.body);
+    await product.save();
+
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
+}
 module.exports = {
     index,
     changeStatus,
     changeMulti,
-    deleteItem
+    deleteItem,
+    create,
+    createProduct
 }
