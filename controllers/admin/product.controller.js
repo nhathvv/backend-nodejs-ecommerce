@@ -60,6 +60,7 @@ const changeMulti = async(req, res) => {
             break;
         case "delete-all":
             await Product.updateMany({_id :  {$in : ids}}, {deleted : true, deletedAt:new Date()})
+            req.flash('success',`Đã xóa ${ids.length} sản phẩm thành công`);
             break;
         case "change-position":
             for (const item of ids) {
@@ -67,6 +68,7 @@ const changeMulti = async(req, res) => {
                 position = parseInt(position);
                 await Product.updateOne({_id : id}, {position:position})
             }
+            req.flash('success',`Cập nhật ví trí cho ${ids.length} thành công`);
             break;
         default:
             break;
