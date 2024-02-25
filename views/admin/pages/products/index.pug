@@ -54,6 +54,10 @@ block main
                                     a(href="javascript:;" class="badge badge-danger"  data-id=item.id data-status=item.status button-change-status) Dừng hoạt động
                             td 
                                 a(  
+                                    href=`${prefixAdmin}/products/detail/${item.id}`
+                                    class="btn btn-secondary btn-sm"
+                                ) Chi tiết
+                                a(  
                                     href=`${prefixAdmin}/products/edit/${item.id}`
                                     class="btn btn-warning btn-sm"
                                 ) Sửa

@@ -144,6 +144,23 @@ const editProduct = async (req,res) => {
     }
     res.redirect(`${systemConfig.prefixAdmin}/products`)
 }
+// [GET] /admin/products/detail/:id
+const detail = async(req,res) => {
+    try {
+        const id = req.params.id;
+        let find = {
+            deleted : false,
+            _id : id
+        }
+        const product = await Product.findOne(find);
+        res.render("admin/pages/products/detail",{
+            pageTitle : product.title,
+            product : product
+        })
+       } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products`)
+       }
+}
 module.exports = {
     index,
     changeStatus,
@@ -152,5 +169,6 @@ module.exports = {
     create,
     createProduct,
     edit,
-    editProduct
+    editProduct,
+    detail
 }
