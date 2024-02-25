@@ -96,4 +96,9 @@
     padding: 3px 10px;
     border-radius: 8px;
   }
+  .product-thumbnail {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+  }
   /* End product-item */
