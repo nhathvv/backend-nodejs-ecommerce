@@ -18,9 +18,10 @@ app.use(methodOverride('_method'))
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.set("vỉews","./views")
+app.set("vỉews",`${__dirname}/views`)
 app.set('view engine', 'pug')
-app.use(express.static("public"))
+
+app.use(express.static(`${__dirname}/public`))
 // Flash
 app.use(cookieParser('Nhathv'));
 app.use(session({ cookie: { maxAge: 60000 }}));
