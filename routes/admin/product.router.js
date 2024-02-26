@@ -12,10 +12,14 @@ router.delete('/delete/:id', controllers.deleteItem);
 router.get("/create", controllers.create)
 router.post("/create",
         upload.single('thumbnail'),
-        validates.createPost,
         uploadCloud.upload,
+        validates.createPost,
         controllers.createProduct);
 router.get("/edit/:id", controllers.edit)
-router.patch("/edit/:id",upload.single('thumbnail'),validates.createPost,controllers.editProduct);
+router.patch("/edit/:id",
+        upload.single('thumbnail'),
+        uploadCloud.upload,
+        validates.createPost,
+        controllers.editProduct);
 router.get("/detail/:id",controllers.detail)
 module.exports = router;

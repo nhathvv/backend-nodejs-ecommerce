@@ -25,8 +25,17 @@ const index = async (req, res) => {
         currentPage  : 1,
         limitItems : 4
     }, req.query, countProduct)
+
+    // Sort
+    let sort = {}
+    if(req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue
+    }else {
+        sort.position = "desc"
+    }
+    // End sort
     const products = await Product.find(find)
-        .sort({position:"desc"})
+        .sort(sort)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip)
     res.render("admin/pages/products/index",{

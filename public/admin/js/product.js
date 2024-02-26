@@ -2,7 +2,6 @@
 const btnChangeStatus = document.querySelectorAll("[button-change-status]")
 const formChangeStatus = document.querySelector("#form-change-status");
 const path = formChangeStatus.getAttribute("data-path")
-console.log(path)
 if(btnChangeStatus.length > 0) {
     btnChangeStatus.forEach(button => {
         button.addEventListener("click", ()=> {
