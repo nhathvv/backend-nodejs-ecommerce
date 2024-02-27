@@ -2,11 +2,16 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include  ../../mixins/table-tree.pug
-
+include  ../../mixins/sort.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
 
 block main
-  
+
     h1 Danh mục sản phẩm
+    +alert-success(5000)
+    +alert-error(5000)
     .card.mb-3 
         .card-header Bộ lọc và tìm kiếm 
         .card-body
@@ -16,15 +21,22 @@ block main
                 .col-6 
                     +search(keyword)
     .card.mb-3
+      .card-header Sắp xếp
+      .card-body
+        .row
+          .col-4
+            +sortCategory()
+    .card.mb-3
       .card-header Danh sách
         .card-body
           .row
             .col-8
+              +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
             .col-4
-                a(
-                  href=`${prefixAdmin}/products-category/create`
-                  class="btn btn-outline-success"
-                ) + Thêm mới
+              a(
+                href=`${prefixAdmin}/products-category/create`
+                class="btn btn-outline-success"
+              ) + Thêm mới
             
           table(
             class="table table-hover table-sm"
@@ -43,3 +55,6 @@ block main
 
             tbody
               +table-tree(records)
+    +pagination(pagination)
+    form(action="", method="POST", data-path=`${prefixAdmin}/products-category/change-status` id="form-change-status")
+    script(src="/admin/js/product.js") 

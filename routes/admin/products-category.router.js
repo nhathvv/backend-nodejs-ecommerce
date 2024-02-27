@@ -12,4 +12,6 @@ router.post("/create",
         uploadCloud.upload,
         validates.createCategoryPost,
         controllers.createCategoryProduct);
+router.patch('/change-status/:status/:id', controllers.changeStatus);
+router.patch('/change-multi', controllers.changeMulti);
 module.exports = router;

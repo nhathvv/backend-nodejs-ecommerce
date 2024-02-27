@@ -9,7 +9,6 @@ if(btnChangeStatus.length > 0) {
             const id = button.getAttribute("data-id");
             const statusChage = statusCurrent === "active" ? "inactive" : "active";
             const action = `${path}/${statusChage}/${id}?_method=PATCH`
-            console.log(action);
             formChangeStatus.action = action;
             formChangeStatus.submit()
         })
