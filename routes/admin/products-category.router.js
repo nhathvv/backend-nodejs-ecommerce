@@ -14,4 +14,11 @@ router.post("/create",
         controllers.createCategoryProduct);
 router.patch('/change-status/:status/:id', controllers.changeStatus);
 router.patch('/change-multi', controllers.changeMulti);
+
+router.get("/edit/:id",controllers.edit)
+router.patch("/edit/:id",
+        upload.single('thumbnail'),
+        uploadCloud.upload,
+        validates.createCategoryPost,
+        controllers.editCategory)
 module.exports = router;

@@ -1,5 +1,6 @@
-mixin table-tree(items, level = 1)
+mixin table-tree(items, level = 1,)
     each item, index in items
+        - const prefix = Array(level + 1).join("-- ")
         tr 
             td
                 input(
@@ -15,7 +16,7 @@ mixin table-tree(items, level = 1)
                     width="100px"
                     height="auto"
                   )
-            td #{item.title}
+            td #{prefix}#{item.title}
             td
                 input(
                     type="number"
@@ -54,4 +55,6 @@ mixin table-tree(items, level = 1)
                     class="btn btn-danger btn-sm ml-1"
                     button-delete
                         data-id=item.id
-                ) Xóa     
+                ) Xóa
+        if item.children && item.children.length > 0
+            +table-tree(item.children, level + 1)

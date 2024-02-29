@@ -3,6 +3,7 @@ const systemConfig = require('../../config/system')
 const filerStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
 const paginationHelper = require("../../helpers/pagination")
+const createTreeHelper = require("../../helpers/createTree")
 // [GET] /admin/products-category
 const index = async(req,res) => {
     // Filter
@@ -35,9 +36,11 @@ const index = async(req,res) => {
         .sort(sort)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip)
-    res.render("admin/pages/products-categogy/index",{
+    // Tree
+    const newRecords = createTreeHelper.tree(records);
+    res.render("admin/pages/products-category/index",{
         pageTitle : "Danh mục sản phẩm",
-        records : records,
+        records : newRecords,
         filterStatus:filterStatus,
         keyword : objectSearch.keyword,
         pagination : objectPagination
@@ -83,8 +86,14 @@ const changeMulti = async(req, res) => {
 }
 // [GET] /admin/products-category/create
 const create = async(req,res) => {
-    res.render("admin/pages/products-categogy/create",{
+    let find = {
+        deleted : false
+    }
+    const records = await ProductCategory.find(find);
+    const newRecords = createTreeHelper.tree(records);
+    res.render("admin/pages/products-category/create",{
         pageTitle : "Tạo danh mục",
+        records : newRecords
     })
 }
 // [POST] /admin/products-category/create
@@ -100,10 +109,43 @@ const createCategoryProduct = async(req,res) => {
 
     res.redirect(`${systemConfig.prefixAdmin}/products-category`)
 }
+// [GET] /admin/products-category/edit/:id
+const edit = async(req,res) => {
+    const id = req.params.id;
+    let find = {
+        deleted: false,
+        _id : id
+    }
+    const data = await ProductCategory.findOne(find)
+    const records = await ProductCategory.find({deleted : false})
+    res.render("admin/pages/products-category/edit",{
+        pageTitle : data.title,
+        data : data,
+        records : records
+    })
+}
+// [PATCH] /admin/products-category/edit/:id
+const editCategory = async(req,res) => {
+    const id = req.params.id
+    req.body.position = parseInt(req.body.position);
+    if(req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+    try {
+        await ProductCategory.updateOne({_id: id}, req.body)
+        req.flash("success", "Cập nhật sản phẩm thành công!")
+    } catch (error) {
+        console.log(error)
+        req.flash("error", "Cập nhật sản phẩm thất bại!")
+    }
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`)
+}
 module.exports = {
     index,
     create,
     changeStatus,
     changeMulti,
-    createCategoryProduct
+    createCategoryProduct,
+    edit,
+    editCategory,
 }
