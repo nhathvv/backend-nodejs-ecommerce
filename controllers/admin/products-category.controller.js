@@ -111,26 +111,28 @@ const createCategoryProduct = async(req,res) => {
 }
 // [GET] /admin/products-category/edit/:id
 const edit = async(req,res) => {
-    const id = req.params.id;
-    let find = {
-        deleted: false,
-        _id : id
+    try {
+        const id = req.params.id;
+        let find = {
+            deleted: false,
+            _id : id
+        }
+        const data = await ProductCategory.findOne(find)
+        const records = await ProductCategory.find({deleted : false})
+        const newRecords = createTreeHelper.tree(records)
+        res.render("admin/pages/products-category/edit",{
+            pageTitle : data.title,
+            data : data,
+            records : newRecords
+        })
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`)
     }
-    const data = await ProductCategory.findOne(find)
-    const records = await ProductCategory.find({deleted : false})
-    res.render("admin/pages/products-category/edit",{
-        pageTitle : data.title,
-        data : data,
-        records : records
-    })
 }
 // [PATCH] /admin/products-category/edit/:id
 const editCategory = async(req,res) => {
     const id = req.params.id
     req.body.position = parseInt(req.body.position);
-    if(req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
     try {
         await ProductCategory.updateOne({_id: id}, req.body)
         req.flash("success", "Cập nhật sản phẩm thành công!")
