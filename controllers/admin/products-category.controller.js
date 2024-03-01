@@ -152,7 +152,7 @@ const detail = async(req,res) => {
     const data = await ProductCategory.findOne(find)
     const records = await ProductCategory.find({deleted : false})
     const newRecords = createTreeHelper.tree(records)
-    console.log(newRecords)
+
     res.render("admin/pages/products-category/detail",{
         pageTitle : data.title,
         data : data,
