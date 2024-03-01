@@ -6,7 +6,6 @@ include ../../mixins/select-tree.pug
 block main
   h1(class="mb-4") Thêm mới danh mục sản phẩm
   +alert-error(5000)
-
   form(
     action=`${prefixAdmin}/products-category/create`
     method="POST"
