@@ -24,7 +24,7 @@ const index = async(req,res) => {
     if(req.query.sortKey && req.query.sortValue) {
         sort[req.query.sortKey] = req.query.sortValue
     }else {
-        sort.position = "desc"
+        sort.position = "asc"
     }
     // Pagination
     const countProduct = await ProductCategory.countDocuments(find);

@@ -1,4 +1,5 @@
 mixin table-tree(items, level = 1,)
+    - const startIndex = pagination.limitItems * (pagination.currentPage - 1)
     each item, index in items
         - const prefix = Array(level + 1).join("-- ")
         tr 
@@ -8,7 +9,7 @@ mixin table-tree(items, level = 1,)
                     name="id"
                     value=item.id
                   )
-            td #{item.index}
+            td #{startIndex + item.index}
             td
                 img(
                     src=item.thumbnail

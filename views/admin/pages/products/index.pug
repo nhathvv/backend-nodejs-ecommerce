@@ -43,11 +43,12 @@ block main
                         th Trạng thái 
                         th Hành động
                 tbody 
+                    - const startIndex = pagination.limitItems * (pagination.currentPage - 1)
                     each item, index in products 
                         tr 
                             td 
                                 input(type="checkbox" name="id" value=item.id)
-                            td #{index+1}
+                            td #{startIndex + index + 1}
                             td 
                                 img(src=item.thumbnail alt=item.title width="100px" height="auto")
                             td #{item.title}
