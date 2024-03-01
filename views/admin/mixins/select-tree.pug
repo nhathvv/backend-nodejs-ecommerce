@@ -7,3 +7,9 @@ mixin select-tree(items, level = 1,parentId="")
         )   #{prefix}#{item.title}
             if item.children && item.children.length > 0
                 +select-tree(item.children,level + 1,parentId)
+mixin detail(items,parentId="") 
+    each item in items
+        if parentId == item.id
+            div(class="mb-4") Danh mục cha: <b>#{item.title}</b>
+        if item.children && item.children.length > 0
+                +detail(item.children,parentId)

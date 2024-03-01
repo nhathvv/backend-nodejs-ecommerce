@@ -21,4 +21,5 @@ router.patch("/edit/:id",
         uploadCloud.upload,
         validates.createCategoryPost,
         controllers.editCategory)
+router.get("/detail/:id",controllers.detail)
 module.exports = router;

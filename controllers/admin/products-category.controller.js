@@ -142,6 +142,23 @@ const editCategory = async(req,res) => {
     }
     res.redirect(`${systemConfig.prefixAdmin}/products-category`)
 }
+//[GET] /admin/products-category/detail/:id
+const detail = async(req,res) => {
+    const id = req.params.id
+    let find = {
+        _id : id,
+        deleted : false
+    }
+    const data = await ProductCategory.findOne(find)
+    const records = await ProductCategory.find({deleted : false})
+    const newRecords = createTreeHelper.tree(records)
+    console.log(newRecords)
+    res.render("admin/pages/products-category/detail",{
+        pageTitle : data.title,
+        data : data,
+        records: newRecords
+    })
+}
 module.exports = {
     index,
     create,
@@ -150,4 +167,5 @@ module.exports = {
     createCategoryProduct,
     edit,
     editCategory,
+    detail,
 }
