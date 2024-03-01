@@ -159,6 +159,17 @@ const detail = async(req,res) => {
         records: newRecords
     })
 }
+const deleteItem = async(req,res) => {
+    const id = req.params.id;
+    try {
+        await ProductCategory.updateOne({_id:id}, {deleted : true, deletedAt: new Date()})
+        req.flash("success","Xóa danh mục thành công")
+        res.redirect("back")
+    } catch (error) {
+        req.flash("error","Xóa danh mục không thành công")
+        res.redirect("back")
+    }
+}
 module.exports = {
     index,
     create,
@@ -168,4 +179,5 @@ module.exports = {
     edit,
     editCategory,
     detail,
+    deleteItem,
 }

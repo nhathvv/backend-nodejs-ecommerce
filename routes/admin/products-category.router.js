@@ -22,4 +22,5 @@ router.patch("/edit/:id",
         validates.createCategoryPost,
         controllers.editCategory)
 router.get("/detail/:id",controllers.detail)
+router.delete("/delete/:id",controllers.deleteItem)
 module.exports = router;
