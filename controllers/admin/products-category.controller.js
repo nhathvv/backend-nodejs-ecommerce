@@ -152,13 +152,13 @@ const detail = async(req,res) => {
     const data = await ProductCategory.findOne(find)
     const records = await ProductCategory.find({deleted : false})
     const newRecords = createTreeHelper.tree(records)
-
     res.render("admin/pages/products-category/detail",{
         pageTitle : data.title,
         data : data,
         records: newRecords
     })
 }
+//[DELETE] /admin/products-category/delete/:id
 const deleteItem = async(req,res) => {
     const id = req.params.id;
     try {
