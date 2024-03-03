@@ -1,18 +1,51 @@
-// Delete item
-const buttonsDelete = document.querySelectorAll("[button-delete]")
-const formDeleteItem = document.querySelector("#form-delete-item")
-if(buttonsDelete.length > 0) {
-    buttonsDelete.forEach(button => {
-        button.addEventListener("click", ()=> {
-            const isConfirm = confirm("Bạn có muốn xóa không ?")
-            if(isConfirm) {
-                const id = button.getAttribute("data-id")
-                const path = formDeleteItem.getAttribute("data-path")
-                const action = `${path}/${id}?_method=DElETE`;
-                formDeleteItem.action = action;
-                formDeleteItem.submit();
-            }
+// Permissions
+const tablePermissions = document.querySelector("[table-permissions]")
+if(tablePermissions) {
+    const buttonSubmit = document.querySelector("[button-submit]")
+    buttonSubmit.addEventListener("click",()=> {
+        let permissions = []
+        const rows = tablePermissions.querySelectorAll("[data-name]")
+        rows.forEach(row => {
+          const name = row.getAttribute("data-name")
+          const inputs = row.querySelectorAll("input")
+          if(name == "id") {
+            inputs.forEach(input => {
+               const id = input.value;
+               permissions.push({
+                id:id,
+                permissions: [],
+               })
+            })
+          }else {
+            inputs.forEach((input,index) => {
+                const checked = input.checked
+                if(checked) {
+                    permissions[index].permissions.push(name)
+                }
+            })
+          }
+        })
+        if(permissions.length > 0) {
+            const formChangePermission = document.querySelector("#form-change-permissions")
+            const inputPermission = formChangePermission.querySelector("input")
+            inputPermission.value = JSON.stringify(permissions)
+            formChangePermission.submit()
+        }
+    })
+}
+// End permissions
+// Permissions default
+const dataRecords = document.querySelector("[data-records]")
+if(dataRecords) {
+    const records = JSON.parse(dataRecords.getAttribute("data-records"))
+    const tablePermissions = document.querySelector("[table-permissions]")
+    records.forEach((record,index) => {
+        const permissions = record.permissions
+        permissions.forEach((item) => {
+            const row = tablePermissions.querySelector(`[data-name="${item}"]`)
+            const input = row.querySelectorAll("input")[index]
+            input.checked = true
         })
     })
 }
-// End delete item
+// End permission default
