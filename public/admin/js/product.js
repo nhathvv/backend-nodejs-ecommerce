@@ -18,7 +18,6 @@ if(formChangeStatus) {
 }
 // End change status
 // Delete item
-console.log("OK")
 const buttonsDelete = document.querySelectorAll("[button-delete]")
 const formDeleteItem = document.querySelector("#form-delete-item")
 if(buttonsDelete.length > 0) {
@@ -28,7 +27,7 @@ if(buttonsDelete.length > 0) {
             if(isConfirm) {
                 const id = button.getAttribute("data-id")
                 const path = formDeleteItem.getAttribute("data-path")
-                const action = `${path}/${id}?_method=DElETE`;
+                const action = `${path}/${id}?_method=DELETE`;
                 formDeleteItem.action = action;
                 formDeleteItem.submit();
             }

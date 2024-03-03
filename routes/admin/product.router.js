@@ -5,6 +5,7 @@ const router = express.Router()
 const multer  = require('multer')
 const upload = multer()
 const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware")
+
 router.get('/', controllers.index);
 router.patch('/change-status/:status/:id', controllers.changeStatus);
 router.patch('/change-multi', controllers.changeMulti);

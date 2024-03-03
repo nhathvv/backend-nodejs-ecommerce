@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+
+block main
+  if (data.avatar)
+    div(class="mb-4")
+      img(
+        src=data.avatar
+        style="width: 100px"
+      )
+  if (data.fullName)
+    div(class="mb-4") <b>Họ tên</b>: #{data.fullName}
+  if (data.role.title)
+    div(class="mb-4") <b>Phân quyền</b>: #{data.role.title}
+
+  if (data.email)
+    div(class="mb-4") <b>Email</b>: #{data.email}
+  if (data.status)
+    div(class="mb-4")
+        span <b>Trạng thái</b>:
+        if (data.status === "active")
+            span(class="badge badge-success") Hoạt động
+        else
+            span(class="badge badge-danger") Dừng hoạt động
+  a(
+    href=`${prefixAdmin}/accounts/edit/${data.id}`
+    class="btn btn-warning"
+  ) Chỉnh sửa
+
+  script(src="/admin/js/account.js")

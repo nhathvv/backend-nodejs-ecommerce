@@ -15,7 +15,6 @@ const index = async (req, res) => {
     if(req.query.status) {
         find.status = req.query.status
     }
-
     // Search
     const objectSearch = searchHelper(req.query);
     if(req.query.keyword) {
@@ -178,6 +177,7 @@ const detail = async(req,res) => {
         res.redirect(`${systemConfig.prefixAdmin}/products`)
        }
 }
+
 module.exports = {
     index,
     changeStatus,
