@@ -45,7 +45,8 @@ block main
                             th Giá
                             th Vị trí
                             th Trạng thái
-                            th Người tạo 
+                            th Người tạo
+                            th Người cập nhật
                             th Hành động
                     tbody 
                         - const startIndex = pagination.limitItems * (pagination.currentPage - 1)
@@ -74,6 +75,11 @@ block main
                                 td 
                                     div #{item.accountfullName}
                                     +formatDateTime(item.createdBy.createdAt)
+                                td 
+                                    - const updatedBy = item.updatedBy[item.updatedBy.length - 1]
+                                    if(updatedBy) 
+                                        div #{updatedBy.accountFullName}
+                                        +formatDate(updatedBy.deletedAt)
                                 td 
                                     a(  
                                         href=`${prefixAdmin}/products/detail/${item.id}`
