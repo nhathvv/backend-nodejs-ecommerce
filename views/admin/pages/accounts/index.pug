@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 block main
+  if(role.permissions.includes("accounts_view"))
     h1(class="mb-4") Danh sách tài khoản
     +alert-success(5000)
     +alert-error(5000)
@@ -10,6 +11,7 @@ block main
         .row
           .col-8
           .col-4.text-right
+            if(role.permissions.includes("accounts_create"))
               a(
                 href=`${prefixAdmin}/accounts/create`
                 class="btn btn-outline-success"
@@ -60,14 +62,16 @@ block main
                     class="btn btn-secondary btn-sm"
                     href=`${prefixAdmin}/accounts/detail/${item.id}`
                   ) Chi tiết
-                    a(
-                      class="btn btn-warning btn-sm ml-1"
-                      href=`${prefixAdmin}/accounts/edit/${item.id}`
-                    ) Sửa
-                    button(
-                      class="btn btn-danger btn-sm ml-1"
-                      button-delete
-                      data-id=item.id
-                    ) Xóa
+                    if(role.permissions.includes("accounts_edit"))
+                      a(
+                        class="btn btn-warning btn-sm ml-1"
+                        href=`${prefixAdmin}/accounts/edit/${item.id}`
+                      ) Sửa
+                    if(role.permissions.includes("accounts_delete"))
+                      button(
+                        class="btn btn-danger btn-sm ml-1"
+                        button-delete
+                        data-id=item.id
+                      ) Xóa
     form(action="", method="POST", data-path=`${prefixAdmin}/accounts/delete` id="form-delete-item") 
     script(src="/admin/js/product.js") 

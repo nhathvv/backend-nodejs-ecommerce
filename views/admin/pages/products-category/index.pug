@@ -8,7 +8,7 @@ include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 
 block main
-
+  if(role.permissions.includes("products_category_view"))  
     h1 Danh mục sản phẩm
     +alert-success(5000)
     +alert-error(5000)
@@ -33,10 +33,11 @@ block main
             .col-8
               +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
             .col-4
-              a(
-                href=`${prefixAdmin}/products-category/create`
-                class="btn btn-outline-success"
-              ) + Thêm mới
+              if(role.permissions.includes("products_category_create"))  
+                a(
+                  href=`${prefixAdmin}/products-category/create`
+                  class="btn btn-outline-success"
+                ) + Thêm mới
             
           table(
             class="table table-hover table-sm"
