@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model")
+const Account = require("../../models/account.model")
 const ProductCategory = require("../../models/products-category.model")
 const systemConfig = require('../../config/system')
 const filerStatusHelper = require("../../helpers/filterStatus")
@@ -39,6 +40,15 @@ const index = async (req, res) => {
         .sort(sort)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip)
+    for (const product of products) {
+        const user = await Account.findOne({
+            _id : product.createdBy.account_id,
+        })
+        console.log(user)
+        if(user) {
+            product.accountfullName = user.fullName;
+        }
+    }
     res.render("admin/pages/products/index",{
         pageTitle : "Danh sách sản phẩm",
         products : products,
@@ -69,7 +79,11 @@ const changeMulti = async(req, res) => {
             req.flash('success',`Cập nhật trạng thái cho ${ids.length} sản phẩm thành công`);
             break;
         case "delete-all":
-            await Product.updateMany({_id :  {$in : ids}}, {deleted : true, deletedAt:new Date()})
+            // await Product.deleteMany({_id :  {$in : ids}});
+            await Product.updateMany({_id :  {$in : ids}}, {deleted : true, deletedBy : {
+                account_id : res.locals.user.id,
+                deletedAt : new Date()
+            }})
             req.flash('success',`Đã xóa ${ids.length} sản phẩm thành công`);
             break;
         case "change-position":
@@ -91,7 +105,11 @@ const deleteItem = async(req,res) => {
     // Permanently deleted
     // await Product.deleteOne({_id : id})
     // Soft erase
-    await Product.updateOne({_id: id}, {deleted : true, deletedAt : new Date()})
+    await Product.updateOne({_id: id}, {deleted : true
+        ,deletedBy : {
+            account_id : res.locals.user.id,
+            deletedAt : new Date()
+        }})
     res.redirect('back')
 }
 // [GET] /admin/products/create
@@ -116,6 +134,9 @@ const createProduct = async(req,res) => {
         req.body.position = countProduct + 1;
     }else {
         req.body.position = parseInt(req.body.position);
+    }
+    req.body.createdBy = {
+        account_id : res.locals.user.id
     }
     const product = new Product(req.body);
     await product.save();

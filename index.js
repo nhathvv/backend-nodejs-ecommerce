@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const flash = require('express-flash')
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
+const moment = require("moment")
 require('dotenv').config()
 
 const routerAdmin = require("./routes/admin/index.router")
@@ -33,7 +34,7 @@ app.use(flash());
 
 // App locals
 app.locals.prefixAdmin = systemConfig.prefixAdmin
-
+app.locals.moment = moment
 // Router
 routerAdmin(app)
 router(app)
