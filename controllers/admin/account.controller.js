@@ -102,7 +102,7 @@ const editAccount = async(req,res) => {
     }else {
         req.body.password = md5(req.body.password)
         await Account.updateOne({_id:id}, req.body);
-        req.flash("success", "Cập nhật sản phẩm thành công!")
+        req.flash("success", "Cập nhật tải khoản thành công!")
         res.redirect(`${systemConfig.prefixAdmin}/accounts`)
     }
 }
