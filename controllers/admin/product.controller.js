@@ -94,11 +94,11 @@ const changeMulti = async(req, res) => {
             req.flash('success',`Cập nhật trạng thái cho ${ids.length} sản phẩm thành công`);
             break;
         case "delete-all":
-            // await Product.deleteMany({_id :  {$in : ids}});
-            await Product.updateMany({_id :  {$in : ids}}, {deleted : true, deletedBy : {
-                account_id : res.locals.user.id,
-                deletedAt : new Date()
-            }})
+            await Product.deleteMany({_id :  {$in : ids}});
+            // await Product.updateMany({_id :  {$in : ids}}, {deleted : true, deletedBy : {
+            //     account_id : res.locals.user.id,
+            //     deletedAt : new Date()
+            // }})
             req.flash('success',`Đã xóa ${ids.length} sản phẩm thành công`);
             break;
         case "change-position":
@@ -118,13 +118,13 @@ const changeMulti = async(req, res) => {
 const deleteItem = async(req,res) => {
     const id = req.params.id;
     // Permanently deleted
-    // await Product.deleteOne({_id : id})
+    await Product.deleteOne({_id : id})
     // Soft erase
-    await Product.updateOne({_id: id}, {deleted : true
-        ,deletedBy : {
-            account_id : res.locals.user.id,
-            deletedAt : new Date()
-        }})
+    // await Product.updateOne({_id: id}, {deleted : true
+    //     ,deletedBy : {
+    //         account_id : res.locals.user.id,
+    //         deletedAt : new Date()
+    //     }})
     res.redirect('back')
 }
 // [GET] /admin/products/create

@@ -7,6 +7,12 @@ block main
         .row 
             .col-12 
                 +box-head("Sản phẩm nổi bật")
-
         .row 
             +product-grid(productFeatured)
+
+    .container.my-3
+        .row 
+            .col-12 
+                +box-head("Sản phẩm mới nhất")
+        .row 
+            +product-grid(productsNew)
