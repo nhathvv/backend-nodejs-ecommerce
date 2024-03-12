@@ -15,6 +15,8 @@ const index = async (req, res) => {
             keyword : keyword,
             products : newProducts,
         })
+    }else {
+        res.redirect("/")
     }
 }
 module.exports = {
