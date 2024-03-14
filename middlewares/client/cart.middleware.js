@@ -10,8 +10,10 @@ const cartId = async(req, res, next) => {
         const cart = await Cart.findOne({
             _id: cartId
         });
-        cart.totalQuantity = cart.products.reduce((total, product) => total + product.quantity, 0);
-        res.locals.miniCart = cart;
+        if(cart) {
+            cart.totalQuantity = cart.products.reduce((total, product) => total + product.quantity, 0);
+            res.locals.miniCart = cart;
+        }
     }
     next();
 }
