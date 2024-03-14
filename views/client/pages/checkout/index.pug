@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+  +alert-success(3000)
+  +alert-error(3000)
+
+  .container.my-3 
+    .row 
+      .col-12
+        +box-head(pageTitle)
+
+    .row 
+      .col-12 
+        table(class="table table-bordered")
+          thead 
+            tr 
+              th STT
+              th Ảnh
+              th Tên
+              th Giá
+              th Số lượng
+              th Tổng tiền
+          tbody 
+            if(cartDetail.products.length > 0)
+              each item, index in cartDetail.products
+                tr 
+                  td #{index + 1}
+                  td 
+                    img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
+                  td #{item.productInfo.title}
+                  td #{item.productInfo.priceNew}$
+                  td #{item.quantity}
+                  td #{item.totalPrice}$
+            else
+              p không có sản phẩm nào trong giỏ hàng
+    if(cartDetail.products.length > 0)
+      h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}$
+
+  .container.my-3 
+      .row 
+        .col-12
+          if(cartDetail.products.length > 0)
+            .row 
+              .col-12 
+                .card.p-4.my-4
+                  form(
+                    action="/checkout/order"
+                    method="POST"
+                  )
+                    div(class="form-group")
+                      label(for="fullName") Họ tên 
+                      input(type="text" id="fullName" name="fullName" class="form-control" required)
+
+                    div(class="form-group")
+                      label(for="phone") Số điện thoại
+                      input(type="text" id="phone" name="phone" class="form-control" required)
+
+                    div(class="form-group")
+                      label(for="address") Địa chỉ
+                      input(type="text" id="address" name="address" class="form-control" required)
+                    
+                    div(class="form-group")
+                      button(
+                        type="submit"
+                        class="btn btn-success btn-block"
+                      ) Đặt hàng
