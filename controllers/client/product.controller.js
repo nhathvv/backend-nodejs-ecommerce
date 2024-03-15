@@ -16,7 +16,7 @@ const index = async (req, res) => {
         productsNew : productsNew
     })
 }
-// // [GET]: /products/detail:slugProduct
+// [GET]: /products/detail:slugProduct
 const detail = async(req,res) => {
     try {
         const slug = req.params.slugProduct;
