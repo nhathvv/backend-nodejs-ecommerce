@@ -108,6 +108,12 @@ const postResetPassword = async (req, res) => {;
     req.flash("success","Đổi mật khẩu thành công");
     res.redirect("/");
 }
+// [GET] /user/info
+const info = async (req, res) => {
+    const tokenUser = req.cookies.tokenUser;
+    const infoUser = await User.findOne({tokenUser : tokenUser}).select("-password");
+    res.render("client/pages/user/info", { pageTitle: "Thông tin tài khoản", infoUser : infoUser })
+}
 module.exports = {
     register,
     postRegister,
@@ -120,4 +126,5 @@ module.exports = {
     postOtp,
     resetPassword,
     postResetPassword,
+    info,
 }
