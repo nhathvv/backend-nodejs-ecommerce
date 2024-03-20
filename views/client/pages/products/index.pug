@@ -6,7 +6,7 @@ block main
    .container.my-3
         .row 
             .col-12 
-                +box-head("Danh sách sản phẩm")
+                +box-head(`${pageTitle}`)
 
         .row 
             +product-grid(productsNew)

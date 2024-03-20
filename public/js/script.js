@@ -1,4 +1,5 @@
 // Alert 
+console.log("OK");
 const showAlert = document.querySelector("[show-alert]")
 const closeAlert = document.querySelector("[close-alert]")
 if(showAlert) {

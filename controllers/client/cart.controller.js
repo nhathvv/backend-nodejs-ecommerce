@@ -50,6 +50,7 @@ const addPost = async (req, res) => {
             quantity : quantity
         }
         await Cart.updateOne({_id: cartId}, {$push: {products: objectProduct}});
+        req.flash("success", "Thêm vào giỏ hàng thành công");
     }
     res.redirect("back");
 }

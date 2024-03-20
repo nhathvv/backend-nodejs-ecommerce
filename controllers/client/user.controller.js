@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const Cart = require("../../models/cart.model");
 const ForgotPassword = require("../../models/forgot-password.model");
 const sendMailHelper = require("../../helpers/sendMail");
 const md5 = require("md5");
@@ -38,6 +39,11 @@ const postLogin = async (req, res) => {
         res.redirect("back");
         return;
     }
+    await Cart.updateOne({
+        _id : req.cookies.cartId
+    },{
+        user_id : user._id
+    })
     req.flash("success","Đăng nhập thành công");
     res.cookie("tokenUser",user.tokenUser);
     res.redirect("/");
@@ -45,6 +51,7 @@ const postLogin = async (req, res) => {
 // [GET] /user/logout
 const logout = (req, res) => {
     res.clearCookie("tokenUser");
+    res.clearCookie("cartId");
     res.redirect("/");
 }
 // [GET] /user/password/forgot
