@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+block main
+  h1 Cài đặt chung
+
+  +alert-error(3000)
+  +alert-success(3000)
+
+  form(action=`${prefixAdmin}/settings/general?_method=PATCH` method="POST" enctype="multipart/form-data")
+    div(class="form-group")
+      label(for="websiteName") Tên website
+      input(type="text" id="websiteName" name="websiteName" class="form-control" value = settingGeneral ? settingGeneral.websiteName : "")
+
+    div(class="form-group" upload-image)
+      label(for="logo") Logo
+      input(type="file" id="logo" name="logo" accept="image/*" class="form-control-file" upload-image-input)
+      img(src=settingGeneral ? settingGeneral.logo : "" class="image-preview" upload-image-preview)
+
+    div(class="form-group")
+      label(for="phone") Số điện thoại
+      input(type="text" id="phone" name="phone" class="form-control" value = settingGeneral ? settingGeneral.phone : "")
+
+    div(class="form-group")
+      label(for="email") Email
+      input(type="email" id="email" name="email" class="form-control" value = settingGeneral ? settingGeneral.email : "")
+
+    div(class="form-group")
+      label(for="address") Địa chỉ
+      input(type="text" id="address" name="address" class="form-control" value = settingGeneral ? settingGeneral.address : "")
+
+    div(class="form-group")
+      label(for="copyright") Copyright
+      input(type="text" id="copyright" name="copyright" class="form-control" value = settingGeneral ? settingGeneral.copyright : "")
+
+    div(class="form-group")
+      button(type="submit" class="btn btn-primary") Cập nhật

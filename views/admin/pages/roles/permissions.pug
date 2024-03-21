@@ -5,7 +5,7 @@ block main
     if(role.permissions.includes("roles_permissions"))
         +alert-success(5000)
         +alert-error(5000)
-        h1(class="mb-4") Phân quyền 
+        h1(class="mb-4") Phân quyền
         if(records)
             div(data-records=records)
 
@@ -24,7 +24,7 @@ block main
                         th Tính năng
                         each item in records
                             th(class="text-center") #{item.title}
-                            
+
                 tbody
                     tr(data-name="id" class="d-none")
                         td
@@ -32,7 +32,7 @@ block main
                             td(class="text-center")
                                 input(type="text" value=item.id)
                     //- Danh mục sản phẩm
-                    tr 
+                    tr
                         td(colspan="4")
                             b Danh mục sản phẩm
                     tr(data-name="products_category_view")
@@ -40,13 +40,13 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="products_category_create")
                         td Thêm mới
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="products_category_edit")
                         td Chỉnh sửa
                         each item in records
@@ -59,7 +59,7 @@ block main
                                 input(type="checkbox")
 
                     //- Sản phẩm
-                    tr 
+                    tr
                         td(colspan="4")
                             b Sản phẩm
                     tr(data-name="products_view")
@@ -67,13 +67,13 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="products_create")
                         td Thêm mới
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="products_edit")
                         td Chỉnh sửa
                         each item in records
@@ -85,7 +85,7 @@ block main
                             td(class="text-center")
                                 input(type="checkbox")
                     //- Nhóm quyền
-                    tr 
+                    tr
                         td(colspan="4")
                             b Nhóm quyền
                     tr(data-name="roles_view")
@@ -93,13 +93,13 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="roles_create")
                         td Thêm mới
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="roles_edit")
                         td Chỉnh sửa
                         each item in records
@@ -116,7 +116,7 @@ block main
                             td(class="text-center")
                                 input(type="checkbox")
                     //- Nhóm quyền
-                    tr 
+                    tr
                         td(colspan="4")
                             b Tài khoản
                     tr(data-name="accounts_view")
@@ -124,13 +124,13 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="accounts_create")
                         td Thêm mới
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-                        
+
                     tr(data-name="accounts_edit")
                         td Chỉnh sửa
                         each item in records
@@ -141,6 +141,16 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
+                    //- Cài đặt chung
+                    tr
+                        td(colspan="4")
+                            b Cài đặt chung
+                    tr(data-name="settings_view")
+                        td Xem
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
 
 
 
@@ -149,15 +159,14 @@ block main
             method="POST"
             action=`${prefixAdmin}/roles/permissions?_method=PATCH`
             class="d-none"
-        )   
+        )
             div(class="form-group")
                 input(
                     type="text"
                     class="form-control"
                     name="permissions"
             )
-                
-        
+
+
         script(src="/admin/js/role.js")
-                            
-                        
+
