@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect index.js"
+    "dev": "nodemon --inspect index.js",
+    "test1": "mocha test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "chai": "^5.1.2",
     "cloudinary": "^2.0.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.2",
@@ -19,12 +21,14 @@
     "express-session": "^1.18.0",
     "md5": "^2.3.0",
     "method-override": "^3.0.0",
+    "mocha": "^10.7.3",
     "moment": "^2.30.1",
     "mongoose": "^8.1.0",
     "mongoose-slug-updater": "^3.3.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.12",
     "pug": "^3.0.2",
+    "selenium-webdriver": "^4.25.0",
     "streamifier": "^0.1.1",
     "tinymce": "^6.8.3"
   },

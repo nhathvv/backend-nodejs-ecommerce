@@ -10,6 +10,7 @@ const general =  async(req,res) => {
 // [POST] /admin/settings/general
 const generalPatch = async(req,res) => {
     const settingGeneral = await SettingsGeneral.findOne({});
+    console.log(">> check setting general", settingGeneral)
     if(settingGeneral) {
         await SettingsGeneral.updateOne({},req.body);
     }else {
